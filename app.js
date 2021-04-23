@@ -28,7 +28,7 @@ app.get('/search', (req, res) => {
       restaurant.category.toLowerCase().includes(keyword.toLowerCase())
   )
 
-  res.render('index', { restaurants, keyword })
+  restaurants.length > 0 ? res.render('index', { restaurants, keyword }) : res.render('error', { keyword })
 })
 
 // show page
