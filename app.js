@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+const { results: restaurantList } = require('./restaurant.json') // 解構賦值
 const port = 3000
 
 /* Require express-handlebars */
@@ -15,13 +15,13 @@ app.use(express.static('public'))
 /* Route setting */
 // home page
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  res.render('index', { restaurants: restaurantList })
 })
 
 //search page
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter( restaurant =>
+  const restaurants = restaurantList.filter( restaurant =>
       restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
       restaurant.name_en.toLowerCase().includes(keyword.toLowerCase())
   )
@@ -31,7 +31,7 @@ app.get('/search', (req, res) => {
 
 // show page
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.results.find(
+  const restaurant = restaurantList.find(
     restaurant => restaurant.id === Number(req.params.restaurant_id)
   )
 
