@@ -22,13 +22,14 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   // search by name or category
-  const restaurants = restaurantList.filter( restaurant =>
-      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+  const restaurants = restaurantList.filter(
+    restaurant =>
+      restaurant.name.toLowerCase().includes(keyword.trim().toLowerCase()) ||
+      restaurant.name_en.toLowerCase().includes(keyword.trim().toLowerCase()) ||
+      restaurant.category.toLowerCase().includes(keyword.trim().toLowerCase())
   )
 
-  restaurants.length > 0 ? res.render('index', { restaurants, keyword }) : res.render('error', { keyword })
+  res.render('index', { restaurants, keyword })
 })
 
 // show page
